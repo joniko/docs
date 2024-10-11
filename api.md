@@ -138,73 +138,32 @@ Este documento detalla las especificaciones necesarias para la homologación de 
 
 ## Detalles de Conexión
 
-| Configuración    | Homologación                                       | Producción                                        |
-| ---------------- | -------------------------------------------------- | ------------------------------------------------- |
-| Host API Session | `https://apisesionh.bancoroela.com.ar/auth/sesion` | `https://apisesion.bancoroela.com.ar/Auth/Sesion` |
-| Host Other APIs  | `https://apisiroh.bancoroela.com.ar/siro/`         | `https://apisiro.bancoroela.com.ar/siro/`         |
-| Usuario          | `UsuarioTestAPI`                                   | CUIT/CUIL del usuario                             |
-| Contraseña       | `Hola123` (prueba)                                 | Credenciales de producción (solicitar a soporte)  |
+Es crucial distinguir entre los entornos de homologación (pruebas) y producción. Use las URLs apropiadas según el entorno en el que esté trabajando.
 
-## Ejemplos
+### Entorno de Homologación (Pruebas)
 
-### Ejemplo de Solicitud para `/Sesion`
+| Configuración    | URL/Datos                                           |
+|------------------|-----------------------------------------------------|
+| Host API Session | `https://apisesionh.bancoroela.com.ar/auth/sesion`  |
+| Host Other APIs  | `https://apisiroh.bancoroela.com.ar/siro/`          |
+| Usuario          | `UsuarioTestAPI`                                    |
+| Contraseña       | `Hola123` (prueba)                                  |
 
-```bash
-curl -X POST "https://apisesionh.bancoroela.com.ar/auth/sesion" -H "accept: application/json" -H "Content-Type: application/json" -d '{
-  "Usuario": "UsuarioTestAPI",
-  "Password": "Hola123"
-}'
-```
+### Entorno de Producción
 
-### Ejemplo de Respuesta para `/Sesion`
+| Configuración    | URL/Datos                                           |
+|------------------|-----------------------------------------------------|
+| Host API Session | `https://apisesion.bancoroela.com.ar/Auth/Sesion`   |
+| Host Other APIs  | `https://apisiro.bancoroela.com.ar/siro/`           |
+| Usuario          | CUIT/CUIL del usuario                               |
+| Contraseña       | Credenciales de producción (solicitar a soporte)    |
 
-```json
-{
-  "access_token": "example_access_token",
-  "token_type": "bearer",
-  "expires_in": 3599
-}
-```
-
-### Ejemplo de Respuesta de Error
-
-```json
-{
-  "Message": "Solicitud inválida.",
-  "ModelState": {
-    "LoginError": ["El usuario no es válido o la contraseña es incorrecta"]
-  }
-}
-```
-
-### Ejemplo de Solicitud para `/siro/Administradores`
-
-```bash
-curl -X GET "https://apisiroh.bancoroela.com.ar/siro/Administradores" -H "authorization: Bearer <token>" -H "accept: application/json" -H "content-type: application/json"
-```
-
-### Ejemplo de Respuesta Exitosa para `/siro/Administradores`
-
-```json
-["20084974073", "20111904600", "20119749698", "20123419910"]
-```
-
-### Respuesta de Error para `/siro/Administradores`
-
-```json
-{
-  "Message": "Se ha denegado la autorización para esta solicitud."
-}
-```
-
-### Ejemplo para `/siro/Convenios`
-
-```bash
-curl -X GET "https://apisiroh.bancoroela.com.ar/siro/Convenios?cuit_administrador=20233953270" -H "authorization: Bearer <token>" -H "accept: application/json" -H "content-type: application/json"
-```
+**Importante**: Asegúrese de usar las URLs y credenciales correctas según el entorno en el que esté trabajando. Nunca use credenciales de prueba en producción.
 
 ## Notas Adicionales
 
 - Asegúrese de que las llamadas a la API sigan los requisitos de formato y utilicen los tokens de autenticación adecuados.
 - Los límites de tiempo de espera para las llamadas a la API están establecidos en 25 segundos, después de los cuales se puede reintentar la solicitud.
 - Consulte al equipo de soporte de Siro para cualquier problema específico o al realizar la transición de homologación a producción.
+- **Importante**: Siempre verifique que está utilizando las URLs correctas según el entorno (homologación o producción) en el que esté trabajando.
+
