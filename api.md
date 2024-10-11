@@ -1,49 +1,50 @@
 ---
-title: 'API'
-description: 'Description of your new file.'
+title: 'API Gestión REST'
+description: 'Documentación detallada para la API de Gestión REST de SIRO'
 ---
-# API GESTIÓN REST Manual - Detailed Documentation
 
-## Version
+# API Gestión REST
 
-- **Version**: 1.0
-- **Author**: AF
-- **Creation Date**: December 2021
+## Información General
 
-## Purpose
+- **Versión**: 1.0
+- **Autor**: AF
+- **Fecha de Creación**: Diciembre 2021
 
-The document details the specifications necessary for the homologation of the following API methods:
+## Propósito
 
-### API Methods Overview
+Este documento detalla las especificaciones necesarias para la homologación de los siguientes métodos de API:
 
-| Method                       | Description                                                                  |
+## Métodos de API
+
+| Método                       | Descripción                                                                  |
 | ---------------------------- | ---------------------------------------------------------------------------- |
-| Sesión                       | Session initiation.                                                          |
-| siro/Administradores         | Consults the administrators SIRO managed by the user.                        |
-| siro/Convenios               | Consults the active agreements of administrators managed by the user.        |
-| siro/Listados/Proceso        | Retrieves the settlement of collections.                                     |
-| siro/Pagos                   | Uploads a payment base for processing.                                       |
-| siro/Pagos/{nro_transaccion} | Consults a previously uploaded payment base.                                 |
-| siro/Adhesiones              | Manages debit or credit card (Visa, Mastercard) or direct debit memberships. |
-| siro/Adhesiones/Desactivar   | Deactivates an existing membership.                                          |
-| siro/Adhesiones/Modificar    | Modifies an existing membership.                                             |
+| Sesión                       | Iniciación de sesión.                                                        |
+| siro/Administradores         | Consulta los administradores SIRO gestionados por el usuario.                |
+| siro/Convenios               | Consulta los convenios activos de administradores gestionados por el usuario.|
+| siro/Listados/Proceso        | Recupera la liquidación de cobranzas.                                        |
+| siro/Pagos                   | Carga una base de pagos para su procesamiento.                               |
+| siro/Pagos/{nro_transaccion} | Consulta una base de pagos previamente cargada.                              |
+| siro/Adhesiones              | Gestiona adhesiones de débito o tarjeta de crédito (Visa, Mastercard) o débito directo. |
+| siro/Adhesiones/Desactivar   | Desactiva una adhesión existente.                                            |
+| siro/Adhesiones/Modificar    | Modifica una adhesión existente.                                             |
 
-## API Endpoints and Details
+## Detalles de Endpoints
 
-### 1. Sesión (Login)
+### Sesión (Login)
 
 - **Endpoint**: `/Sesion`
-- **Method**: `POST`
-- **Request Content Type**: `application/json` over HTTPS
-- **Parameters**:
+- **Método**: `POST`
+- **Tipo de Contenido de la Solicitud**: `application/json` sobre HTTPS
+- **Parámetros**:
   ```json
   {
     "Usuario": "string",
     "Password": "string"
   }
   ```
-- **Responses**:
-  - **Success**:
+- **Respuestas**:
+  - **Éxito**:
     ```json
     {
       "access_token": "string",
@@ -61,32 +62,32 @@ The document details the specifications necessary for the homologation of the fo
     }
     ```
 
-### 2. siro/Administradores
+### siro/Administradores
 
 - **Endpoint**: `/siro/Administradores`
-- **Method**: `GET`
-- **Parameters**: `Authorization` (Bearer token)
-- **Responses**:
-  - **Success**: Array of CUITs managed by the user.
-  - **Error**: Various error messages indicating issues with the request or authorization.
+- **Método**: `GET`
+- **Parámetros**: `Authorization` (token Bearer)
+- **Respuestas**:
+  - **Éxito**: Array de CUITs gestionados por el usuario.
+  - **Error**: Varios mensajes de error indicando problemas con la solicitud o autorización.
 
-### 3. siro/Convenios
+### siro/Convenios
 
 - **Endpoint**: `/siro/Convenios`
-- **Method**: `GET`
-- **Parameters**:
-  - `cuit_administrador`: CUIT of the administrator
-  - `nro_empresa`: Identification number for the agreement
-- **Responses**:
-  - **Success**: List of agreements.
-  - **Error**: Various error messages for unauthorized or invalid requests.
+- **Método**: `GET`
+- **Parámetros**:
+  - `cuit_administrador`: CUIT del administrador
+  - `nro_empresa`: Número de identificación para el convenio
+- **Respuestas**:
+  - **Éxito**: Lista de convenios.
+  - **Error**: Varios mensajes de error para solicitudes no autorizadas o inválidas.
 
-### 4. siro/Listados/Proceso
+### siro/Listados/Proceso
 
 - **Endpoint**: `/siro/Listados/Proceso`
-- **Method**: `POST`
-- **Request Content Type**: `application/json` over HTTPS
-- **Parameters**:
+- **Método**: `POST`
+- **Tipo de Contenido de la Solicitud**: `application/json` sobre HTTPS
+- **Parámetros**:
   ```json
   {
     "fecha_desde": "string",
@@ -95,58 +96,58 @@ The document details the specifications necessary for the homologation of the fo
     "nro_empresa": "string"
   }
   ```
-- **Responses**:
-  - **Success**: Array of processed records.
-  - **Error**: Error messages indicating invalid or missing fields.
+- **Respuestas**:
+  - **Éxito**: Array de registros procesados.
+  - **Error**: Mensajes de error indicando campos inválidos o faltantes.
 
-### 5. siro/Pagos
+### siro/Pagos
 
 - **Endpoint**: `/siro/Pagos`
-- **Method**: `POST`
-- **Parameters**: Payment base upload details.
-- **Responses**:
-  - **Success**: Returns a transaction number.
-  - **Error**: Error messages indicating issues with the uploaded payment base.
+- **Método**: `POST`
+- **Parámetros**: Detalles de carga de base de pagos.
+- **Respuestas**:
+  - **Éxito**: Devuelve un número de transacción.
+  - **Error**: Mensajes de error indicando problemas con la base de pagos cargada.
 
-### 6. siro/Adhesiones
+### siro/Adhesiones
 
 - **Endpoint**: `/siro/Adhesiones`
-- **Method**: `POST`
-- **Parameters**: Membership details (credit card, direct debit, etc.)
-- **Responses**:
-  - **Success**: Returns the membership details.
-  - **Error**: Error messages indicating validation or format issues.
+- **Método**: `POST`
+- **Parámetros**: Detalles de la adhesión (tarjeta de crédito, débito directo, etc.)
+- **Respuestas**:
+  - **Éxito**: Devuelve los detalles de la adhesión.
+  - **Error**: Mensajes de error indicando problemas de validación o formato.
 
-### 7. siro/Adhesiones/Desactivar
+### siro/Adhesiones/Desactivar
 
 - **Endpoint**: `/siro/Adhesiones/Desactivar/{nro_cpe}`
-- **Method**: `DELETE`
-- **Parameters**: Membership number.
-- **Responses**:
-  - **Success**: Confirmation of deactivation.
-  - **Error**: Error messages indicating issues with the deactivation process.
+- **Método**: `DELETE`
+- **Parámetros**: Número de adhesión.
+- **Respuestas**:
+  - **Éxito**: Confirmación de desactivación.
+  - **Error**: Mensajes de error indicando problemas con el proceso de desactivación.
 
-### 8. siro/Adhesiones/Modificar
+### siro/Adhesiones/Modificar
 
 - **Endpoint**: `/siro/Adhesiones/Modificar`
-- **Method**: `PUT`
-- **Parameters**: Updated membership details (e.g., new credit card or CBU).
-- **Responses**:
-  - **Success**: Returns the modified membership details.
-  - **Error**: Error messages for invalid parameters.
+- **Método**: `PUT`
+- **Parámetros**: Detalles actualizados de la adhesión (por ejemplo, nueva tarjeta de crédito o CBU).
+- **Respuestas**:
+  - **Éxito**: Devuelve los detalles de la adhesión modificada.
+  - **Error**: Mensajes de error para parámetros inválidos.
 
-## Connection Details
+## Detalles de Conexión
 
-| Configuration    | Homologation                                       | Production                                        |
+| Configuración    | Homologación                                       | Producción                                        |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------- |
 | Host API Session | `https://apisesionh.bancoroela.com.ar/auth/sesion` | `https://apisesion.bancoroela.com.ar/Auth/Sesion` |
 | Host Other APIs  | `https://apisiroh.bancoroela.com.ar/siro/`         | `https://apisiro.bancoroela.com.ar/siro/`         |
-| User             | `UsuarioTestAPI`                                   | User’s CUIT/CUIL                                  |
-| Password         | `Hola123` (test)                                   | Production credentials (request from support)     |
+| Usuario          | `UsuarioTestAPI`                                   | CUIT/CUIL del usuario                             |
+| Contraseña       | `Hola123` (prueba)                                 | Credenciales de producción (solicitar a soporte)  |
 
-## Examples
+## Ejemplos
 
-### Example Request for `/Sesion`
+### Ejemplo de Solicitud para `/Sesion`
 
 ```bash
 curl -X POST "https://apisesionh.bancoroela.com.ar/auth/sesion" -H "accept: application/json" -H "Content-Type: application/json" -d '{
@@ -155,7 +156,7 @@ curl -X POST "https://apisesionh.bancoroela.com.ar/auth/sesion" -H "accept: appl
 }'
 ```
 
-### Example Response for `/Sesion`
+### Ejemplo de Respuesta para `/Sesion`
 
 ```json
 {
@@ -165,45 +166,45 @@ curl -X POST "https://apisesionh.bancoroela.com.ar/auth/sesion" -H "accept: appl
 }
 ```
 
-### Example Error Response
+### Ejemplo de Respuesta de Error
 
 ```json
 {
-  "Message": "Invalid request.",
+  "Message": "Solicitud inválida.",
   "ModelState": {
-    "LoginError": ["The user is invalid or the password is incorrect"]
+    "LoginError": ["El usuario no es válido o la contraseña es incorrecta"]
   }
 }
 ```
 
-### Example Request for `/siro/Administradores`
+### Ejemplo de Solicitud para `/siro/Administradores`
 
 ```bash
 curl -X GET "https://apisiroh.bancoroela.com.ar/siro/Administradores" -H "authorization: Bearer <token>" -H "accept: application/json" -H "content-type: application/json"
 ```
 
-### Example Successful Response for `/siro/Administradores`
+### Ejemplo de Respuesta Exitosa para `/siro/Administradores`
 
 ```json
 ["20084974073", "20111904600", "20119749698", "20123419910"]
 ```
 
-### Error Response for `/siro/Administradores`
+### Respuesta de Error para `/siro/Administradores`
 
 ```json
 {
-  "Message": "Authorization has been denied for this request."
+  "Message": "Se ha denegado la autorización para esta solicitud."
 }
 ```
 
-### Example for `/siro/Convenios`
+### Ejemplo para `/siro/Convenios`
 
 ```bash
 curl -X GET "https://apisiroh.bancoroela.com.ar/siro/Convenios?cuit_administrador=20233953270" -H "authorization: Bearer <token>" -H "accept: application/json" -H "content-type: application/json"
 ```
 
-## Additional Notes
+## Notas Adicionales
 
-- Ensure API calls follow the format requirements and use proper authentication tokens.
-- Timeout limits for API calls are set at 25 seconds, after which the request can be retried.
-- Consult Siro's support team for any specific issues or when transitioning from homologation to production.
+- Asegúrese de que las llamadas a la API sigan los requisitos de formato y utilicen los tokens de autenticación adecuados.
+- Los límites de tiempo de espera para las llamadas a la API están establecidos en 25 segundos, después de los cuales se puede reintentar la solicitud.
+- Consulte al equipo de soporte de Siro para cualquier problema específico o al realizar la transición de homologación a producción.

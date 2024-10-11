@@ -1,27 +1,28 @@
 ---
-title: 'Botón de Pago'
-description: 'Description of your new file.'
+title: 'API Payment Button'
+description: 'Documentación detallada para la API de Botón de Pago de SIRO'
 ---
-# SIRO API REST Payment Button Manual - Detailed Documentation
 
-## 1. API Overview
+# SIRO API REST Payment Button
 
-This document details the specifications for API methods required for homologation.
+## 1. Descripción General de la API
 
-## 2. Authentication (Sesión)
+Este documento detalla las especificaciones para los métodos de API requeridos para la homologación del botón de pago.
+
+## 2. Autenticación (Sesión)
 
 - **Endpoint**: `/Sesion`
-- **Method**: `POST`
-- **Content-Type**: `application/json` over HTTPS
-- **Body**:
+- **Método**: `POST`
+- **Content-Type**: `application/json` sobre HTTPS
+- **Cuerpo**:
   ```json
   {
     "Usuario": "string",
     "Password": "string"
   }
   ```
-- **Response**:
-  - **Success**:
+- **Respuesta**:
+  - **Éxito**:
     ```json
     {
       "access_token": "string",
@@ -39,12 +40,12 @@ This document details the specifications for API methods required for homologati
     }
     ```
 
-## 3. Payment Intent Creation (Pago/Comprobante)
+## 3. Creación de Intención de Pago (Pago/Comprobante)
 
-- **Description**: Creates a payment intent for an existing invoice registered in Siro.
+- **Descripción**: Crea una intención de pago para una factura existente registrada en Siro.
 - **Endpoint**: `/Pago/Comprobante`
-- **Method**: `POST`
-- **Body**:
+- **Método**: `POST`
+- **Cuerpo**:
   ```json
   {
     "nro_cliente_empresa": "string",
@@ -54,9 +55,9 @@ This document details the specifications for API methods required for homologati
     "IdReferenciaOperacion": "string"
   }
   ```
-- **Important**: Store the returned `Hash` for future API calls like payment status checks.
-- **Responses**:
-  - **Success**:
+- **Importante**: Almacene el `Hash` devuelto para futuras llamadas a la API como verificaciones de estado de pago.
+- **Respuestas**:
+  - **Éxito**:
     ```json
     {
       "Url": "string",
@@ -73,12 +74,12 @@ This document details the specifications for API methods required for homologati
     }
     ```
 
-## 4. Payment Creation (Pago)
+## 4. Creación de Pago (Pago)
 
-- **Description**: Creates a new payment intent when no preloaded debt exists.
+- **Descripción**: Crea una nueva intención de pago cuando no existe deuda precargada.
 - **Endpoint**: `/Pago`
-- **Method**: `POST`
-- **Body**:
+- **Método**: `POST`
+- **Cuerpo**:
   ```json
   {
     "nro_cliente_empresa": "string",
@@ -91,8 +92,8 @@ This document details the specifications for API methods required for homologati
     "Detalle": [{"Descripcion": "string", "Importe": float}]
   }
   ```
-- **Responses**:
-  - **Success**:
+- **Respuestas**:
+  - **Éxito**:
     ```json
     {
       "Url": "string",
@@ -109,12 +110,12 @@ This document details the specifications for API methods required for homologati
     }
     ```
 
-## 5. Payment Status Check (Pago/{hash}/{idResultado})
+## 5. Verificación de Estado de Pago (Pago/{hash}/{idResultado})
 
-- **Description**: Checks the status of a payment operation.
+- **Descripción**: Verifica el estado de una operación de pago.
 - **Endpoint**: `/Pago/{hash}/{idResultado}`
-- **Method**: `GET`
-- **Response**:
+- **Método**: `GET`
+- **Respuesta**:
   ```json
   {
     "PagoExitoso": bool,
@@ -123,17 +124,17 @@ This document details the specifications for API methods required for homologati
     "Estado": "string"
   }
   ```
-- **States**:
-  - `PROCESADA`: Successful
-  - `CANCELADA`: Cancelled
-  - `ERROR`: Error occurred
+- **Estados**:
+  - `PROCESADA`: Exitoso
+  - `CANCELADA`: Cancelado
+  - `ERROR`: Ocurrió un error
 
-## 6. Payment Status Range Check (Pago/Consulta)
+## 6. Verificación de Estado de Pago por Rango (Pago/Consulta)
 
-- **Description**: Allows querying payment intents by date range or status.
+- **Descripción**: Permite consultar intenciones de pago por rango de fechas o estado.
 - **Endpoint**: `/Pago/Consulta`
-- **Method**: `POST`
-- **Body**:
+- **Método**: `POST`
+- **Cuerpo**:
   ```json
   {
     "FechaDesde": "string",
@@ -141,7 +142,7 @@ This document details the specifications for API methods required for homologati
     "estado": "string"
   }
   ```
-- **Response**:
+- **Respuesta**:
   ```json
   [
     {
@@ -156,59 +157,62 @@ This document details the specifications for API methods required for homologati
   ]
   ```
 
-## 7. Test Environment Configuration
+## 7. Configuración del Entorno de Pruebas
 
-- **Test Host**: `https://siropagosh.bancoroela.com.ar/api/`
-- **Production Host**: `https://siropagos.bancoroela.com.ar/api/`
-- **Example Test User**: `UsuarioTestSiro` (Password: `Hola123`)
+- **Host de Prueba**: `https://siropagosh.bancoroela.com.ar/api/`
+- **Host de Producción**: `https://siropagos.bancoroela.com.ar/api/`
+- **Usuario de Prueba**: `UsuarioTestSiro` (Contraseña: `Hola123`)
 
-## 8. Test Cards for Validation
+## 8. Tarjetas de Prueba para Validación
 
-Test cards provided for different scenarios:
+Tarjetas de prueba proporcionadas para diferentes escenarios:
 
-| Scenario             | Card Type       | Card Number        | CVV  | Expiry   |
-|----------------------|-----------------|--------------------|------|----------|
-| **Successful Payment** | Visa Credit    | 4507990000004905   | 123  | 2030-08  |
-|                      | Mastercard Credit | 5299910010000015 | 123  | 2030-08  |
-|                      | Cabal Credit    | 5896570000000008   | 123  | 2030-08  |
-|                      | Visa Debit      | 4517721004856075   | 123  | 2030-08  |
-| **Card Denied**      | Visa Credit     | 4546400044997331   | 123  | 2030-08  |
-|                      | Mastercard Credit | 5455330200000016 | 123  | 2030-08  |
-| **Insufficient Funds** | Visa Credit   | 4258210000474094   | 123  | 2030-08  |
-|                      | Mastercard Credit | 5204230010000012 | 123  | 2030-08  |
-|                      | Visa Debit      | 4517720194823929   | 123  | 2030-08  |
+| Tipo de Tarjeta   | Número           | CVV | Vencimiento | Escenario          |
+|-------------------|------------------|-----|-------------|-------------------|
+| Visa Crédito      | 4507990000004905 | 123 | 2030-08     | Pago Exitoso       |
+| Mastercard Crédito| 5299910010000015 | 123 | 2030-08     | Pago Exitoso       |
+| Cabal Crédito     | 5896570000000008 | 123 | 2030-08     | Pago Exitoso       |
+| Visa Débito       | 4517721004856075 | 123 | 2030-08     | Pago Exitoso       |
+| Visa Crédito      | 4546400044997331 | 123 | 2030-08     | Tarjeta Rechazada  |
+| Mastercard Crédito| 5455330200000016 | 123 | 2030-08     | Tarjeta Rechazada  |
+| Visa Crédito      | 4258210000474094 | 123 | 2030-08     | Fondos Insuficientes |
+| Mastercard Crédito| 5204230010000012 | 123 | 2030-08     | Fondos Insuficientes |
+| Visa Débito       | 4517720194823929 | 123 | 2030-08     | Fondos Insuficientes |
 
+**Nota**: Estas tarjetas de prueba son solo para homologación y no deben utilizarse en producción.
 
-**Note**: Test cards are for homologation only and should not be used in production.
+## 9. Manejo de Errores en la API
 
-## 9. Additional Notes
+La API utiliza códigos de estado HTTP estándar:
+- 200: OK
+- 400: Bad Request – Problemas de sintaxis
+- 401: Unauthorized – Autenticación incorrecta o permisos insuficientes
+- 404: Not Found – Recurso no disponible
+- 500: Internal Server Error – Problema del servidor
+- 501: Not Implemented – Método no reconocido
 
-- Ensure API calls follow format requirements and use proper tokens.
-- Timeout limits are set at 25 seconds, with retries allowed.
-- Consult Siro's support for issues or production transition.
+Ejemplo de Respuesta de Error:
+```json
+{
+  "Message": "Mensaje de error",
+  "ModelState": {
+    "NombreCampo": ["Descripción del error"]
+  }
+}
+```
 
-## 10. Data Connection Details
+## 10. Detalles de Conexión de Datos
 
-| Configuration     | Homologation                                       | Production                                        |
-| ----------------- | -------------------------------------------------- | ------------------------------------------------- |
-| Host API Session  | `https://apisesionh.bancoroela.com.ar/auth/sesion` | `https://apisesion.bancoroela.com.ar/Auth/Sesion` |
-| Host Other APIs   | `https://apisiroh.bancoroela.com.ar/siro/`         | `https://apisiro.bancoroela.com.ar/siro/`         |
-| Example Test User | `UsuarioTestSiro`                                  | User’s CUIT/CUIL                                  |
-| Example Password  | `Hola123`                                          | Production credentials (request from support)     |
+| Configuración     | Homologación                                       | Producción                                        |
+|-------------------|----------------------------------------------------|----------------------------------------------------|
+| Host API Sesión   | `https://apisesionh.bancoroela.com.ar/auth/sesion` | `https://apisesion.bancoroela.com.ar/Auth/Sesion` |
+| Host Otras APIs   | `https://apisiroh.bancoroela.com.ar/siro/`         | `https://apisiro.bancoroela.com.ar/siro/`         |
+| Usuario de Prueba | `UsuarioTestSiro`                                  | CUIT/CUIL del usuario                              |
+| Contraseña        | `Hola123`                                          | Credenciales de producción (solicitar a soporte)   |
 
-## 11. API Error Handling
+## 11. Ejemplos de Respuestas
 
-- The API provides specific error codes:
-  - **200**: OK
-  - **400**: Bad Request – Syntax issues.
-  - **401**: Unauthorized – Incorrect authentication or permissions.
-  - **404**: Not Found – Resource unavailable.
-  - **500**: Internal Server Error – Server issue.
-  - **501**: Not Implemented – Unrecognized method.
-
-## 12. Example Responses
-
-### Successful Payment
+### Pago Exitoso
 
 ```json
 {
@@ -236,10 +240,28 @@ Test cards provided for different scenarios:
 }
 ```
 
-### Error Response
+## 12. Notas Adicionales
 
-```json
-{
-  "Message": "Se ha denegado la autorización para esta solicitud."
-}
-```
+- Siempre use HTTPS para una comunicación segura.
+- Almacene el `Hash` devuelto de la creación de pago para futuras llamadas a la API.
+- Consulte al equipo de soporte de Siro para problemas específicos o al realizar la transición de homologación a producción.
+- Las tarjetas de prueba son solo para homologación y no deben utilizarse en producción.
+- Los límites de tiempo de espera para las llamadas a la API están establecidos en 25 segundos, después de los cuales se puede reintentar la solicitud.
+
+## 13. Flujo de Integración Recomendado
+
+1. Obtener token de autenticación mediante el endpoint `/Sesion`.
+2. Crear una intención de pago usando `/Pago/Comprobante` o `/Pago`.
+3. Redirigir al usuario a la URL proporcionada en la respuesta.
+4. Esperar la redirección del usuario a su `URL_OK` o `URL_ERROR`.
+5. Verificar el estado final del pago usando `/Pago/{hash}/{idResultado}`.
+
+## 14. Soporte y Contacto
+
+Para cualquier consulta técnica o soporte durante la integración, por favor contacte al equipo de soporte de SIRO:
+
+- Email: soporte@siro.com.ar
+- Teléfono: +54 11 1234-5678
+- Horario de atención: Lunes a Viernes, 9:00 a 18:00 (GMT-3)
+
+Asegúrese de tener a mano su identificador de usuario y cualquier mensaje de error relevante al contactar con soporte.
