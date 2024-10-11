@@ -160,6 +160,64 @@ Es crucial distinguir entre los entornos de homologación (pruebas) y producció
 
 **Importante**: Asegúrese de usar las URLs y credenciales correctas según el entorno en el que esté trabajando. Nunca use credenciales de prueba en producción.
 
+## Ejemplos
+
+### Ejemplo de Solicitud para `/Sesion`
+
+```bash
+curl -X POST "https://apisesionh.bancoroela.com.ar/auth/sesion" -H "accept: application/json" -H "Content-Type: application/json" -d '{
+  "Usuario": "UsuarioTestAPI",
+  "Password": "Hola123"
+}'
+```
+
+### Ejemplo de Respuesta para `/Sesion`
+
+```json
+{
+  "access_token": "example_access_token",
+  "token_type": "bearer",
+  "expires_in": 3599
+}
+```
+
+### Ejemplo de Respuesta de Error
+
+```json
+{
+  "Message": "Solicitud inválida.",
+  "ModelState": {
+    "LoginError": ["El usuario no es válido o la contraseña es incorrecta"]
+  }
+}
+```
+
+### Ejemplo de Solicitud para `/siro/Administradores`
+
+```bash
+curl -X GET "https://apisiroh.bancoroela.com.ar/siro/Administradores" -H "authorization: Bearer <token>" -H "accept: application/json" -H "content-type: application/json"
+```
+
+### Ejemplo de Respuesta Exitosa para `/siro/Administradores`
+
+```json
+["20084974073", "20111904600", "20119749698", "20123419910"]
+```
+
+### Respuesta de Error para `/siro/Administradores`
+
+```json
+{
+  "Message": "Se ha denegado la autorización para esta solicitud."
+}
+```
+
+### Ejemplo para `/siro/Convenios`
+
+```bash
+curl -X GET "https://apisiroh.bancoroela.com.ar/siro/Convenios?cuit_administrador=20233953270" -H "authorization: Bearer <token>" -H "accept: application/json" -H "content-type: application/json"
+```
+
 ## Notas Adicionales
 
 - Asegúrese de que las llamadas a la API sigan los requisitos de formato y utilicen los tokens de autenticación adecuados.
