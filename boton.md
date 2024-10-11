@@ -166,18 +166,18 @@ This document details the specifications for API methods required for homologati
 
 Test cards provided for different scenarios:
 
-- **Successful Payment**:
-  - Visa Credit: `4507990000004905` (CVV: `123`, Expiry: `2030-08`)
-  - Mastercard Credit: `5299910010000015` (CVV: `123`, Expiry: `2030-08`)
-  - Cabal Credit: `5896570000000008` (CVV: `123`, Expiry: `2030-08`)
-  - Visa Debit: `4517721004856075` (CVV: `123`, Expiry: `2030-08`)
-- **Card Denied**:
-  - Visa Credit: `4546400044997331` (CVV: `123`, Expiry: `2030-08`)
-  - Mastercard Credit: `5455330200000016` (CVV: `123`, Expiry: `2030-08`)
-- **Insufficient Funds**:
-  - Visa Credit: `4258210000474094` (CVV: `123`, Expiry: `2030-08`)
-  - Mastercard Credit: `5204230010000012` (CVV: `123`, Expiry: `2030-08`)
-  - Visa Debit: `4517720194823929` (CVV: `123`, Expiry: `2030-08`)
+| Scenario             | Card Type       | Card Number        | CVV  | Expiry   |
+|----------------------|-----------------|--------------------|------|----------|
+| **Successful Payment** | Visa Credit    | 4507990000004905   | 123  | 2030-08  |
+|                      | Mastercard Credit | 5299910010000015 | 123  | 2030-08  |
+|                      | Cabal Credit    | 5896570000000008   | 123  | 2030-08  |
+|                      | Visa Debit      | 4517721004856075   | 123  | 2030-08  |
+| **Card Denied**      | Visa Credit     | 4546400044997331   | 123  | 2030-08  |
+|                      | Mastercard Credit | 5455330200000016 | 123  | 2030-08  |
+| **Insufficient Funds** | Visa Credit   | 4258210000474094   | 123  | 2030-08  |
+|                      | Mastercard Credit | 5204230010000012 | 123  | 2030-08  |
+|                      | Visa Debit      | 4517720194823929   | 123  | 2030-08  |
+
 
 **Note**: Test cards are for homologation only and should not be used in production.
 
